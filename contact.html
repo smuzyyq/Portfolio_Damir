@@ -108,6 +108,17 @@ function validateName() {
   return ok;
 }
 
+nameEl.addEventListener('blur', () => {
+  localStorage.setItem('username', nameEl.value.trim());
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('username');
+  if (saved) nameEl.value = saved;
+});
+
+
+
 function validateEmail() {
   const v = emailEl.value.trim();
   const ok = emailRe.test(v);
@@ -164,7 +175,7 @@ form.addEventListener('submit', async (e) => {
 
     statusEl.classList.remove('text-secondary');
     statusEl.classList.add('text-success');
-    statusEl.textContent = 'Sent ✓';
+    statusEl.textContent = 'Sent';
     form.reset();
     updateCount();
     [nameEl, emailEl, msgEl].forEach(el => el.classList.remove('is-valid'));
@@ -176,6 +187,7 @@ form.addEventListener('submit', async (e) => {
   } finally {
     btn.disabled = false;
   }
+
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
